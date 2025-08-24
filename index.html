@@ -1,57 +1,58 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Инвентаризация</title>
-<meta name="theme-color" content="#0f1115">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Инвентаризация ресторана</title>
+<meta name="theme-color" content="#0f1115" />
 <style>
 :root{
   --bg:#0f1115; --fg:#e7eaf0; --muted:#9aa3b2; --accent:#6f86ff; --line:#273047;
-  --card:#151a22; --ok:#2ecc71; --warn:#ffb400; --err:#ff5c5c; --chip:#20283a; --bright:#ffef5a;
+  --card:#151a22; --err:#ff5c5c; --chip:#20283a; --bright:#ffef5a;
+  --pad:12px; --radius:12px; --fs:15px; --fs-sm:13px;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial}
-.wrap{max-width:1100px;margin:0 auto;padding:16px}
-header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#0f1115,#0f1115cc 60%,#0f111500);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-h1{margin:0;font-size:20px}
-.badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#121726}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.tab{padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:#141a28;cursor:pointer}
+body{margin:0;background:var(--bg);color:var(--fg);font:var(--fs)/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial}
+.wrap{max-width:1100px;margin:0 auto;padding:12px}
+header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#0f1115,#0f1115cc 60%,#0f111500);border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:18px}
+.badge{display:inline-flex;gap:6px;align-items:center;padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:#121726;font-size:var(--fs-sm)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tab{padding:6px 10px;border:1px solid var(--line);border-radius:9px;background:#141a28;cursor:pointer;font-size:var(--fs-sm)}
 .tab.active{background:#1a2234;border-color:#30405f}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
-.btn{background:#1a2234;border:1px solid var(--line);color:var(--fg);border-radius:10px;padding:9px 12px;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--pad);margin:10px 0}
+.btn{background:#1a2234;border:1px solid var(--line);color:var(--fg);border-radius:10px;padding:7px 10px;cursor:pointer;font-size:var(--fs-sm)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.warn{background:var(--warn);color:#111;border-color:var(--warn)}
-.btn.danger{background:var(--err);color:#fff;border-color:var(--err)}
 .btn.ghost{background:transparent}
-input,select,textarea{width:100%;background:#111827;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px}
-.grid{display:grid;gap:10px}
-.list-head, .list-row{display:grid;grid-template-columns:64px 1fr 160px;gap:10px;align-items:start}
-.list-head{color:#cfd6e4;font-weight:600}
-.sum{display:inline-flex;gap:6px;align-items:center;border:1px dashed #4b536a;background:#1a2234;padding:6px 10px;border-radius:10px}
-.sum .v{background:var(--bright);color:#111;padding:2px 8px;border-radius:8px;font-weight:800}
+input,select,textarea{width:100%;background:#111827;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px;font-size:var(--fs-sm)}
+.grid{display:grid;gap:8px}
+.notice{padding:8px;border:1px dashed var(--line);border-radius:10px;color:#c9d2e1;background:#141a22;font-size:var(--fs-sm)}
+.login-backdrop{position:fixed;inset:0;background:#0b0d1288;backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:1000}
+.login{width:min(520px,94vw);background:#111521;border:1px solid var(--line);border-radius:14px;padding:14px}
+.list-head,.list-row{display:grid;grid-template-columns:52px 1fr 150px;gap:8px;align-items:start}
 .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.pill{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 8px}
-.actions{display:flex;flex-wrap:wrap;gap:8px}
-.sticky{position:sticky;bottom:0;background:linear-gradient(0deg,#0f1115,#0f111500 70%);padding-top:10px}
-.notice{padding:10px;border:1px dashed var(--line);border-radius:12px;color:#c9d2e1;background:#141a22}
-table{width:100%;border-collapse:collapse}
-th,td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
+.pill{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 6px;font-size:var(--fs-sm)}
+.sum{display:inline-flex;gap:6px;align-items:center;border:1px dashed #4b536a;background:#1a2234;padding:4px 8px;border-radius:9px}
+.sum .v{background:var(--bright);color:#111;padding:1px 6px;border-radius:8px;font-weight:800}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
+th,td{border-bottom:1px solid var(--line);padding:6px;vertical-align:top}
 th{position:sticky;top:0;background:#141a24;z-index:1}
-.login-backdrop{position:fixed;inset:0;background:#0b0d1288;backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:1000}
-.login{width:min(520px,94vw);background:#111521;border:1px solid var(--line);border-radius:16px;padding:18px}
-@media(max-width:860px){
+
+@media (max-width:720px){
+  :root{--pad:10px;--radius:10px;--fs:14px;--fs-sm:12px}
   .list-head,.list-row{grid-template-columns:1fr}
+  .tabs{gap:4px}
+  .btn{padding:6px 8px}
+  .sum{padding:3px 6px}
 }
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
-    <h1>Инвентаризация</h1>
+    <h1>Инвентаризация ресторана</h1>
     <div class="toolbar">
       <span class="badge">Пользователь: <strong id="who">—</strong></span>
       <button class="btn" id="btnChange">Сменить</button>
@@ -66,97 +67,78 @@ th{position:sticky;top:0;background:#141a24;z-index:1}
 <!-- ВХОД -->
 <div class="login-backdrop" id="loginScreen">
   <div class="login">
-    <h2 style="margin:0 0 12px">Вход</h2>
+    <h2 style="margin:0 0 8px;font-size:18px">Вход</h2>
     <div class="grid">
-      <label>Пользователь
-        <select id="roleSel" style="margin-top:6px"
-          onchange="document.getElementById('codeRow').style.display=(this.value==='responsible'?'block':'none')">
-          <option value="waiter">Официант</option>
-          <option value="responsible">Ответственный</option>
-        </select>
+      <label>Выберите своё имя
+        <select id="userSel" style="margin-top:6px"><option value="">— выберите —</option></select>
       </label>
+
       <div id="codeRow" style="display:none">
-        <label>Код ответственного
-          <input id="codeInp" inputmode="numeric" maxlength="2" placeholder="__" style="margin-top:6px">
+        <div class="notice">Для получения доступа к странице ответственного введите код.</div>
+        <label>Код
+          <input id="codeInp" inputmode="numeric" maxlength="4" placeholder="____" style="margin-top:6px" />
         </label>
       </div>
+
       <button class="btn primary" id="loginGo">Продолжить</button>
-      <div class="notice">Код доступа к итогу: <b style="color:var(--bright)">58</b>.</div>
+      <div id="firstRunHint" class="notice" style="display:none">Список пуст. Введите код и войдите как Ответственный, чтобы добавить имена.</div>
     </div>
   </div>
 </div>
 
 <script>
-/* ====== простое хранилище: IndexedDB с фолбэком в localStorage ====== */
+/* ===== Хранилище (IndexedDB + fallback) ===== */
 const idb=(function(){
-  const DB='invCleanDBv1', V=1; let dbp=null;
-  function open(){ if(dbp) return dbp;
-    dbp=new Promise((res,rej)=>{
-      const r=indexedDB.open(DB,V);
-      r.onupgradeneeded=e=>{
-        const db=e.target.result;
-        if(!db.objectStoreNames.contains('users')) db.createObjectStore('users',{keyPath:'id'});
-        if(!db.objectStoreNames.contains('items')) db.createObjectStore('items',{keyPath:'id'});
-        if(!db.objectStoreNames.contains('assign')) db.createObjectStore('assign',{keyPath:'itemId'});
-        if(!db.objectStoreNames.contains('entries')) db.createObjectStore('entries',{keyPath:'key'});
-        if(!db.objectStoreNames.contains('snaps')) db.createObjectStore('snaps',{keyPath:'id'});
-      };
-      r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);
-    }); return dbp;
-  }
-  async function rw(mode,store){ const db=await open(); return db.transaction([store],mode).objectStore(store); }
-  const LS='inv_fallback';
-  const readLS=()=>{try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch(_){return{}}}
-  const writeLS=o=>localStorage.setItem(LS,JSON.stringify(o));
-  async function tryCall(fn){ try{return await fn()}catch(e){return{__fb:true,e}} }
-  return {
-    async set(store,val){ const r=await tryCall(async()=>{const s=await rw('readwrite',store); await new Promise((res,rej)=>{const q=s.put(val); q.onsuccess=res;q.onerror=()=>rej(q.error)}); return val;});
-      if(r&&r.__fb){ const db=readLS(); (db[store]??={})[val.id||val.key]=val; writeLS(db); return val }
-      return r;
-    },
-    async get(store,key){ const r=await tryCall(async()=>{const s=await rw('readonly',store); return await new Promise((res,rej)=>{const q=s.get(key); q.onsuccess=()=>res(q.result); q.onerror=()=>rej(q.error)})});
-      if(r&&r.__fb){ const db=readLS(); return db[store]?.[key] }
-      return r;
-    },
-    async all(store){ const r=await tryCall(async()=>{const s=await rw('readonly',store); return await new Promise((res,rej)=>{const q=s.getAll(); q.onsuccess=()=>res(q.result||[]); q.onerror=()=>rej(q.error)})});
-      if(r&&r.__fb){ const db=readLS(); return Object.values(db[store]||{}) }
-      return r;
-    },
-    async del(store,key){ const r=await tryCall(async()=>{const s=await rw('readwrite',store); return await new Promise((res,rej)=>{const q=s.delete(key); q.onsuccess=res;q.onerror=()=>rej(q.error)})});
-      if(r&&r.__fb){ const db=readLS(); if(db[store]) delete db[store][key]; writeLS(db); }
-      return r;
-    }
+  const DB='invMobile_v1', V=1; let dbp=null;
+  function open(){ if(dbp) return dbp; dbp=new Promise((res,rej)=>{
+    const r=indexedDB.open(DB,V);
+    r.onupgradeneeded=e=>{
+      const db=e.target.result;
+      if(!db.objectStoreNames.contains('users')) db.createObjectStore('users',{keyPath:'id'});
+      if(!db.objectStoreNames.contains('items')) db.createObjectStore('items',{keyPath:'id'});
+      if(!db.objectStoreNames.contains('assign')) db.createObjectStore('assign',{keyPath:'itemId'});
+      if(!db.objectStoreNames.contains('entries')) db.createObjectStore('entries',{keyPath:'key'});
+      if(!db.objectStoreNames.contains('snaps')) db.createObjectStore('snaps',{keyPath:'id'});
+    };
+    r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);
+  }); return dbp;}
+  async function rw(mode,store){const db=await open();return db.transaction([store],mode).objectStore(store)}
+  const LS='inv_fb_mobile', read=()=>{try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch{return{}}}, write=o=>localStorage.setItem(LS,JSON.stringify(o));
+  async function tryCall(fn){try{return await fn()}catch{return{__fb:true}}}
+  return{
+    async set(s,v){const r=await tryCall(async()=>{const o=await rw('readwrite',s);await new Promise((res,rej)=>{const q=o.put(v);q.onsuccess=res;q.onerror=()=>rej(q.error)});return v}); if(r&&r.__fb){const db=read();(db[s]??={})[v.id||v.key]=v;write(db)}return v},
+    async get(s,k){const r=await tryCall(async()=>{const o=await rw('readonly',s);return await new Promise((res,rej)=>{const q=o.get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})}); if(r&&r.__fb){const db=read();return db[s]?.[k]} return r},
+    async all(s){const r=await tryCall(async()=>{const o=await rw('readonly',s);return await new Promise((res,rej)=>{const q=o.getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>rej(q.error)})}); if(r&&r.__fb){const db=read();return Object.values(db[s]||{})} return r},
+    async del(s,k){const r=await tryCall(async()=>{const o=await rw('readwrite',s);return await new Promise((res,rej)=>{const q=o.delete(k);q.onsuccess=res;q.onerror=()=>rej(q.error)})}); if(r&&r.__fb){const db=read(); if(db[s]) delete db[s][k]; write(db)}}
   }
 })();
 
-/* ====== утилиты/состояние ====== */
-const RESPONSIBLE_CODE='58';
+/* ===== Константы / утилиты / состояние ===== */
+const RESPONSIBLE_CODE='5878';
 const uid=(p='id')=>`${p}_${Math.random().toString(36).slice(2,7)}${Date.now().toString(36)}`;
 const now=()=>new Date().toISOString();
-const sum=arr=>(arr||[]).reduce((a,b)=>a+(+b.value||0),0);
+const sum=xs=>(xs||[]).reduce((a,b)=>a+(+b.value||0),0);
 const byOrder=(a,b)=>(a.order||0)-(b.order||0);
-const state={user:null,tabs:[]};
+const state={user:null,tabs:[], _loginTimer:null};
+const ALWAYS_ASK_LOGIN=true; // показывать окно входа всегда при загрузке
 
-/* ====== базовые операции ====== */
+/* ===== Данные ===== */
 async function ensureSeed(){
-  const u=await idb.all('users');
-  if(!u.length){
+  const users=await idb.all('users');
+  if(!users.length){
     await idb.set('users',{id:'u_resp',name:'Ответственный',role:'responsible',active:true,createdAt:now()});
-    await idb.set('users',{id:'u_waiter',name:'Официант',role:'waiter',active:true,createdAt:now()});
   }
 }
 async function listUsers(){ return (await idb.all('users')).filter(u=>u.active!==false).sort((a,b)=>a.name.localeCompare(b.name,'ru')) }
 async function listItems(){ return (await idb.all('items')).sort(byOrder) }
 async function getAssign(){ const a=await idb.all('assign'); return new Map(a.map(x=>[x.itemId,x.userId])) }
 async function setAssign(itemId,userId){ await idb.set('assign',{itemId,userId}) }
-async function getEntry(userId,itemId){
-  return await idb.get('entries',`${userId}|${itemId}`) || {key:`${userId}|${itemId}`,userId,itemId,values:[],comment:''}
-}
+async function getEntry(userId,itemId){ return await idb.get('entries',`${userId}|${itemId}`) || {key:`${userId}|${itemId}`,userId,itemId,values:[],comment:''} }
 async function setEntry(e){ await idb.set('entries',e) }
 async function allEntries(){ return await idb.all('entries') }
 async function clearCurrent(){ for(const e of await idb.all('entries')) await idb.del('entries',e.key) }
 async function makeSnap(title,byUser){
-  const items=await listItems(); const users=await listUsers(); const ent=await allEntries(); const totals={};
+  const items=await listItems(), users=await listUsers(), ent=await allEntries(), totals={};
   for(const it of items){
     const byU={}; for(const u of users){ const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id); byU[u.id]=e?sum(e.values):0 }
     totals[it.id]={overall:Object.values(byU).reduce((a,b)=>a+b,0),byUser:byU};
@@ -166,14 +148,10 @@ async function makeSnap(title,byUser){
 }
 async function listSnaps(){ const s=await idb.all('snaps'); return s.sort((a,b)=>a.createdAt>b.createdAt?-1:1) }
 
-/* ====== UI: вкладки ====== */
+/* ===== Вкладки ===== */
 function setTabs(){
   const isResp=state.user?.role==='responsible';
-  state.tabs=[
-    {id:'mine',label:'Моя часть'},
-    ...(isResp?[{id:'total',label:'Итог'},{id:'manage',label:'Настройки'}]:[]),
-    {id:'history',label:'История'}
-  ];
+  state.tabs=[{id:'mine',label:'Моя часть'}, ...(isResp?[{id:'total',label:'Итог'},{id:'manage',label:'Настройки'}]:[]), {id:'history',label:'История'}];
 }
 function drawTabs(){
   const bar=document.getElementById('tabs'); bar.innerHTML='';
@@ -184,24 +162,63 @@ function drawTabs(){
   }
 }
 
-/* ====== Вход ====== */
+/* ===== Вход ===== */
+async function fillUsersIntoSelect(){
+  const sel=document.getElementById('userSel'); if(!sel) return;
+  const prev=sel.value;
+  sel.innerHTML=`<option value="">— выберите —</option>`;
+  const users=await listUsers();
+  for(const u of users){
+    const opt=document.createElement('option');
+    opt.value=u.id; opt.textContent=u.name+(u.role==='responsible'?' (ответственный)':'');
+    opt.dataset.role=u.role; sel.appendChild(opt);
+  }
+  if([...sel.options].some(o=>o.value===prev)) sel.value=prev;
+  const noUsers = sel.options.length<=1;
+  document.getElementById('codeRow').style.display = (sel.selectedOptions[0]?.dataset.role==='responsible' || noUsers) ? 'block' : 'none';
+  document.getElementById('firstRunHint').style.display = noUsers ? 'block':'none';
+}
+document.getElementById('userSel').addEventListener('change',()=>fillUsersIntoSelect());
+
 document.getElementById('loginGo').onclick=async()=>{
-  const role=document.getElementById('roleSel').value;
-  const code=(document.getElementById('codeInp').value||'').trim();
-  if(role==='responsible' && code!==RESPONSIBLE_CODE){ alert('Неверный код'); return }
-  state.user = role==='responsible'
-    ? {id:'u_resp',name:'Ответственный',role:'responsible'}
-    : {id:'u_waiter',name:'Официант',role:'waiter'};
+  const sel=document.getElementById('userSel');
+  const users=await listUsers();
+  let picked=null;
+
+  if(sel.value){
+    picked = users.find(u=>u.id===sel.value);
+    if(!picked) return alert('Пользователь не найден');
+    if(picked.role==='responsible'){
+      const code=(document.getElementById('codeInp').value||'').trim();
+      if(code!==RESPONSIBLE_CODE) return alert('Неверный код');
+    }
+  } else {
+    // Пустой список — допускаем вход ответственному по коду
+    const code=(document.getElementById('codeInp').value||'').trim();
+    if(code!==RESPONSIBLE_CODE) return alert('Неверный код');
+    picked = users.find(u=>u.role==='responsible') || {id:'u_resp',name:'Ответственный',role:'responsible',active:true,createdAt:now()};
+    await idb.set('users',picked);
+  }
+
+  state.user=picked;
   localStorage.setItem('inv_user',JSON.stringify(state.user));
+  stopLoginAutoRefresh();
   document.getElementById('loginScreen').style.display='none';
   render();
 };
-document.getElementById('btnChange').onclick=()=>{
+
+document.getElementById('btnChange').onclick=async()=>{
   localStorage.removeItem('inv_user');
+  await fillUsersIntoSelect();
+  document.getElementById('codeInp').value='';
   document.getElementById('loginScreen').style.display='';
+  startLoginAutoRefresh();
 };
 
-/* ====== Представления ====== */
+function startLoginAutoRefresh(){ stopLoginAutoRefresh(); state._loginTimer=setInterval(fillUsersIntoSelect,2000) }
+function stopLoginAutoRefresh(){ if(state._loginTimer){clearInterval(state._loginTimer); state._loginTimer=null} }
+
+/* ===== Представления ===== */
 async function viewMine(){
   const app=document.getElementById('app'); app.innerHTML='';
   const items=await listItems(); const assigns=await getAssign(); const ent=await allEntries();
@@ -214,11 +231,6 @@ async function viewMine(){
   const box=el(`<div class="card">
     <div class="list-head"><div>№</div><div>Наименование / описание</div><div>Ввод</div></div>
     <div id="rows"></div>
-    <div class="sticky actions" style="justify-content:flex-end">
-      <button class="btn" id="wa">WhatsApp</button>
-      <button class="btn" id="txt">TXT</button>
-      <button class="btn" id="xls">Excel</button>
-    </div>
   </div>`); app.appendChild(box);
   const rows=box.querySelector('#rows');
 
@@ -229,25 +241,19 @@ async function viewMine(){
       <div>#${it.order||''}</div>
       <div>
         <div style="font-weight:600">${it.name||'(без названия)'}</div>
-        <div class="muted" style="font-size:14px">${it.description||''}</div>
         <div class="pills" id="vals_${it.id}">
-          ${e.values.map(v=>`<span class="pill" data-vid="${v.id}">${v.value}
-            <button class="btn ghost" data-e="edit" title="Изм.">✏️</button>
-            <button class="btn ghost" data-e="del" title="Уд.">🗑️</button>
-          </span>`).join('')}
+          ${e.values.map(v=>`<span class="pill" data-vid="${v.id}">${v.value}<button class="btn ghost" data-e="edit" title="Изм.">✏️</button><button class="btn ghost" data-e="del" title="Уд.">🗑️</button></span>`).join('')}
         </div>
         <textarea id="c_${it.id}" rows="2" placeholder="Комментарий…" style="margin-top:6px">${e.comment||''}</textarea>
-        <div class="actions" style="justify-content:flex-end;margin-top:6px">
-          <button class="btn" data-savec="${it.id}">💬 Сохранить комментарий</button>
-        </div>
-      </div>
-      <div>
-        <div class="actions">
+        <div class="grid" style="grid-template-columns:1fr auto auto;gap:6px;margin-top:6px">
           <input type="number" step="1" inputmode="numeric" id="n_${it.id}" placeholder="значение">
           <button class="btn primary" data-add="${it.id}">Добавить</button>
           <button class="btn" data-reset="${it.id}">Сбросить</button>
         </div>
-        <div class="sum" style="margin-top:8px">Итого: <span class="v" id="s_${it.id}">${total}</span></div>
+        <div class="sum" style="margin-top:6px">Итого: <span class="v" id="s_${it.id}">${total}</span></div>
+        <div class="grid" style="grid-template-columns:auto 1fr;align-items:center;margin-top:6px">
+          <span>💬</span><button class="btn" data-savec="${it.id}">Сохранить комментарий</button>
+        </div>
       </div>
     </div>`);
     rows.appendChild(row);
@@ -274,20 +280,7 @@ async function viewMine(){
       };
     });
   }
-
-  box.querySelector('#wa').onclick=async()=>{
-    const text=await buildMyText(list,myId); window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank');
-  };
-  box.querySelector('#txt').onclick=async()=>download('my.txt',(await buildMyLines(list,myId)).join('\n'),'text/plain');
-  box.querySelector('#xls').onclick=async()=>download('my.xls',toXLS(await buildMyRows(list,myId)),'application/vnd.ms-excel');
 }
-async function buildMyRows(list,myId){
-  const rows=[]; for(const it of list){ const e=await getEntry(myId,it.id); rows.push([it.order||'',it.name||'',(e?sum(e.values):0), (e?.comment||'').replace(/\n/g,' ')]) } return rows;
-}
-async function buildMyLines(list,myId){
-  const rows=await buildMyRows(list,myId); return rows.map(r=>`${r[0]} — ${r[1]} | Итого: ${r[2]} | ${r[3]}`);
-}
-async function buildMyText(list,myId){ return ['Моя часть:',...(await buildMyLines(list,myId))].join('\n') }
 
 async function viewTotal(){
   const app=document.getElementById('app'); app.innerHTML='';
@@ -301,88 +294,68 @@ async function viewTotal(){
   for(const it of items){
     const row=el(`<tr>
       <td>${it.order||''}</td>
-      <td><div style="font-weight:600">${it.name||''}</div><div class="muted" style="font-size:12px">${it.description||''}</div></td>
-      ${users.map(u=>{
-        const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id); return `<td>${e?sum(e.values):0}</td>`;
-      }).join('')}
-      <td><b>${
-        users.map(u=>{const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id);return e?sum(e.values):0}).reduce((a,b)=>a+b,0)
-      }</b></td>
+      <td>${it.name||''}</td>
+      ${users.map(u=>{ const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id); return `<td>${e?sum(e.values):0}</td>`; }).join('')}
+      <td><b>${ users.map(u=>{const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id);return e?sum(e.values):0}).reduce((a,b)=>a+b,0) }</b></td>
       <td><select data-assign="${it.id}">${users.map(u=>`<option value="${u.id}" ${assigns.get(it.id)===u.id?'selected':''}>${u.name}</option>`).join('')}</select></td>
     </tr>`);
     tb.appendChild(row);
     row.querySelector(`[data-assign="${it.id}"]`).onchange=async e=>{ await setAssign(it.id,e.target.value) };
   }
 
-  const split=el(`<div class="card grid" style="grid-template-columns:1fr 1fr">
+  const tools=el(`<div class="card grid" style="grid-template-columns:1fr auto;align-items:end">
     <div>
-      <h3 style="margin:0 0 8px">Разделить таблицу</h3>
-      <div class="actions">
-        <input id="splitN" type="number" min="1" step="1" value="2" style="max-width:130px">
+      <h3 style="margin:0 0 6px;font-size:15px">Разделить таблицу</h3>
+      <div class="grid" style="grid-template-columns:110px auto;gap:6px">
+        <input id="splitN" type="number" min="1" step="1" value="2">
         <button class="btn primary" id="doSplit">Разделить</button>
       </div>
-      <div class="muted" style="margin-top:6px">Назначения можно поправить в столбце «Назначено».</div>
+      <div class="notice" style="margin-top:6px">Назначения можно править в столбце «Назначено».</div>
     </div>
-    <div class="actions" style="justify-content:flex-end;align-items:end">
-      <button class="btn" id="wa">WhatsApp (итог)</button>
-      <button class="btn" id="txt">TXT</button>
-      <button class="btn" id="xls">Excel</button>
+    <div class="grid" style="grid-auto-flow:column;gap:6px">
       <button class="btn primary" id="snap">Закрыть инвентаризацию</button>
-      <button class="btn danger" id="clear">Очистить текущую</button>
+      <button class="btn" id="clear">Очистить текущую</button>
     </div>
-  </div>`); app.appendChild(split);
+  </div>`); app.appendChild(tools);
 
-  split.querySelector('#doSplit').onclick=async()=>{
-    const n=Math.max(1,parseInt(split.querySelector('#splitN').value||'1',10));
+  tools.querySelector('#doSplit').onclick=async()=>{
+    const n=Math.max(1,parseInt(tools.querySelector('#splitN').value||'1',10));
     const arr=items.slice().sort(byOrder); const members=(await listUsers());
     if(members.length<n){ alert('Недостаточно пользователей'); return }
     const chunk=Math.ceil(arr.length/n);
     for(let i=0;i<n;i++){ for(const it of arr.slice(i*chunk,(i+1)*chunk)){ await setAssign(it.id,members[i].id) } }
     render();
   };
-  split.querySelector('#wa').onclick=async()=>window.open(`https://wa.me/?text=${encodeURIComponent(await totalText())}`,'_blank');
-  split.querySelector('#txt').onclick=async()=>download('total.txt',(await totalLines()).join('\n'),'text/plain');
-  split.querySelector('#xls').onclick=async()=>download('total.xls',toXLS(await totalRows()),'application/vnd.ms-excel');
-  split.querySelector('#snap').onclick=async()=>{
+  tools.querySelector('#snap').onclick=async()=>{
     const title=prompt('Название снимка (например, Август 2025):'); if(!title) return;
-    await makeSnap(title,state.user); alert('Снимок сохранён. Он неизменяем.');
+    await makeSnap(title,state.user); alert('Снимок сохранён.');
     location.hash='#history'; render();
   };
-  split.querySelector('#clear').onclick=async()=>{ if(confirm('Очистить текущую? История не тронется.')){ await clearCurrent(); render(); } };
-
-  async function totalRows(){
-    const users=await listUsers(); const items=await listItems(); const ent=await allEntries();
-    const rows=[]; for(const it of items){
-      const line=[it.order||'',it.name||'']; for(const u of users){ const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id); line.push(e?sum(e.values):0) }
-      line.push(line.slice(2).reduce((a,b)=>a+Number(b),0)); rows.push(line);
-    } return {rows,headers:['№','Наименование',...users.map(u=>u.name),'Итого']};
-  }
-  async function totalLines(){ const {rows,headers}=await totalRows(); return [headers.join(' | '),...rows.map(r=>r.join(' | '))] }
-  async function totalText(){ return ['Итоговая инвентаризация:',...(await totalLines())].join('\n') }
+  tools.querySelector('#clear').onclick=async()=>{ if(confirm('Очистить текущую? История не тронется.')){ await clearCurrent(); render(); } };
 }
 
 async function viewManage(){
   const app=document.getElementById('app'); app.innerHTML='';
   const users=await listUsers();
   const ucard=el(`<div class="card">
-    <h3 style="margin:0 0 8px">Пользователи</h3>
+    <h3 style="margin:0 0 6px">Пользователи</h3>
     <div id="ulist"></div>
-    <div class="actions" style="margin-top:8px">
+    <div class="grid" style="grid-template-columns:1fr 160px auto;gap:6px;margin-top:6px">
       <input id="newU" placeholder="Имя">
-      <select id="newR" style="max-width:180px"><option value="waiter">Официант</option><option value="responsible">Ответственный</option></select>
+      <select id="newR"><option value="waiter">Официант</option><option value="responsible">Ответственный</option></select>
       <button class="btn primary" id="addU">Добавить</button>
     </div>
   </div>`); app.appendChild(ucard);
   const UL=ucard.querySelector('#ulist');
   for(const u of users){
-    const r=el(`<div class="actions" style="gap:8px;margin:6px 0">
-      <input id="nm_${u.id}" value="${u.name}" style="flex:1">
-      <select id="rl_${u.id}" style="max-width:180px">
+    const r=el(`<div class="grid" style="grid-template-columns:1fr 160px auto auto;gap:6px;margin:6px 0">
+      <input id="nm_${u.id}" value="${u.name}">
+      <select id="rl_${u.id}">
         <option value="waiter" ${u.role==='waiter'?'selected':''}>Официант</option>
         <option value="responsible" ${u.role==='responsible'?'selected':''}>Ответственный</option>
       </select>
       <button class="btn" data-save="${u.id}">💾</button>
-      <button class="btn ghost" data-hide="${u.id}">Скрыть</button>
+      <button class="btn" data-hide="${u.id}">Скрыть</button>
     </div>`); UL.appendChild(r);
     r.querySelector(`[data-save="${u.id}"]`).onclick=async()=>{
       await idb.set('users',{...u,name:r.querySelector(`#nm_${u.id}`).value.trim()||u.name,role:r.querySelector(`#rl_${u.id}`).value});
@@ -398,23 +371,23 @@ async function viewManage(){
 
   const items=await listItems();
   const icard=el(`<div class="card">
-    <h3 style="margin:0 0 8px">Позиции</h3>
+    <h3 style="margin:0 0 6px">Позиции</h3>
     <div id="ilist"></div>
-    <div class="actions" style="margin-top:8px;flex-wrap:wrap">
-      <input id="io" type="number" placeholder="№" style="max-width:120px">
-      <input id="in" placeholder="Название" style="flex:1">
-      <input id="id" placeholder="Описание" style="flex:2">
-      <button class="btn primary" id="addI">Добавить позицию</button>
+    <div class="grid" style="grid-template-columns:100px 1fr 2fr auto;gap:6px;margin-top:6px">
+      <input id="io" type="number" placeholder="№">
+      <input id="in" placeholder="Название">
+      <input id="id" placeholder="Описание">
+      <button class="btn primary" id="addI">Добавить</button>
     </div>
   </div>`); app.appendChild(icard);
   const IL=icard.querySelector('#ilist');
   for(const it of items){
-    const r=el(`<div class="actions" style="gap:8px;margin:6px 0;flex-wrap:wrap">
-      <input id="o_${it.id}" type="number" value="${it.order||0}" style="max-width:120px">
-      <input id="n_${it.id}" value="${it.name||''}" style="flex:1">
-      <input id="d_${it.id}" value="${it.description||''}" style="flex:2">
+    const r=el(`<div class="grid" style="grid-template-columns:100px 1fr 2fr auto auto;gap:6px;margin:6px 0">
+      <input id="o_${it.id}" type="number" value="${it.order||0}">
+      <input id="n_${it.id}" value="${it.name||''}">
+      <input id="d_${it.id}" value="${it.description||''}">
       <button class="btn" data-save="${it.id}">💾</button>
-      <button class="btn ghost" data-del="${it.id}">🗑️</button>
+      <button class="btn" data-del="${it.id}">🗑️</button>
     </div>`); IL.appendChild(r);
     r.querySelector(`[data-save="${it.id}"]`).onclick=async()=>{
       await idb.set('items',{...it,order:parseInt(r.querySelector(`#o_${it.id}`).value||'0',10),name:r.querySelector(`#n_${it.id}`).value.trim(),description:r.querySelector(`#d_${it.id}`).value.trim()});
@@ -436,42 +409,23 @@ async function viewHistory(){
   const snaps=await listSnaps();
   if(!snaps.length){ app.appendChild(el(`<div class="card notice">Снимков нет.</div>`)); return }
   for(const s of snaps){
-    const card=el(`<div class="card">
-      <div class="actions" style="justify-content:space-between">
-        <div><b>${s.title}</b> <span class="muted">— ${new Date(s.createdAt).toLocaleString('ru-RU')}</span></div>
-        <span class="badge">Незыблемо</span>
-      </div>
-      <div style="overflow:auto;margin-top:8px">
-        <table><thead><tr><th>№</th><th>Наименование</th>${s.users.map(u=>`<th>${u.name}</th>`).join('')}<th>Итого</th></tr></thead>
-        <tbody id="tb_${s.id}"></tbody></table>
-      </div>
-      <div class="grid" style="margin-top:8px">
-        <textarea id="cm_${s.id}" rows="2" placeholder="Комментарий…"></textarea>
-        <div class="actions" style="justify-content:flex-end"><button class="btn" data-addc="${s.id}">Добавить комментарий</button></div>
-        <div id="cl_${s.id}"></div>
-      </div>
+    const card=el(`<div class="card" style="overflow:auto">
+      <div><b>${s.title}</b> <span style="color:#9aa3b2">— ${new Date(s.createdAt).toLocaleString('ru-RU')}</span></div>
+      <table style="margin-top:6px"><thead><tr><th>№</th><th>Наименование</th>${s.users.map(u=>`<th>${u.name}</th>`).join('')}<th>Итого</th></tr></thead>
+      <tbody id="tb_${s.id}"></tbody></table>
     </div>`); app.appendChild(card);
     const tb=card.querySelector(`#tb_${s.id}`);
     for(const it of s.items.sort(byOrder)){
       const t=s.totals[it.id]; if(!t) continue;
       tb.appendChild(el(`<tr><td>${it.order||''}</td><td>${it.name||''}</td>${s.users.map(u=>`<td>${t.byUser[u.id]||0}</td>`).join('')}<td><b>${t.overall||0}</b></td></tr>`));
     }
-    const clog=card.querySelector(`#cl_${s.id}`);
-    const drawC=()=>clog.innerHTML=s.comments.map(c=>`<div class="notice" style="margin:4px 0"><b>${(s.users.find(u=>u.id===c.userId)||{}).name||'—'}</b>: ${c.text}</div>`).join('');
-    drawC();
-    card.querySelector(`[data-addc="${s.id}"]`).onclick=async()=>{
-      const txt=card.querySelector(`#cm_${s.id}`).value.trim(); if(!txt) return;
-      s.comments.push({userId:state.user.id,text:txt,ts:now()}); await idb.set('snaps',s); drawC(); card.querySelector(`#cm_${s.id}`).value='';
-    };
   }
 }
 
-/* ====== helpers ====== */
+/* ===== Хелперы ===== */
 function el(html){ const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstElementChild }
-function download(name,content,type){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000) }
-function toXLS(data){ const rows=(data.headers?[data.headers]:[]).concat(data.rows||[]); const xmlHead=`<?xml version="1.0"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Инвентарь"><Table>`; const body=rows.map(r=>`<Row>${r.map(c=>`<Cell><Data ss:Type="String">${String(c).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</Data></Cell>`).join('')}</Row>`).join(''); return xmlHead+body+`</Table></Worksheet></Workbook>` }
 
-/* ====== рендер ====== */
+/* ===== Рендер ===== */
 async function render(){
   setTabs(); drawTabs();
   document.getElementById('who').textContent=state.user?.name||'—';
@@ -482,12 +436,19 @@ async function render(){
   if(hash==='history') await viewHistory();
 }
 
-/* ====== запуск ====== */
+/* ===== Запуск ===== */
 (async function boot(){
   await ensureSeed();
-  try{ const u=JSON.parse(localStorage.getItem('inv_user')||'null'); if(u&&u.id) state.user=u; }catch(_){}
-  if(!state.user){ document.getElementById('loginScreen').style.display=''; }
-  else { document.getElementById('loginScreen').style.display='none'; render(); }
+  if (ALWAYS_ASK_LOGIN) localStorage.removeItem('inv_user');
+  try{ const u=JSON.parse(localStorage.getItem('inv_user')||'null'); if(u&&u.id) state.user=u; }catch{}
+  if(!state.user){
+    await fillUsersIntoSelect();
+    document.getElementById('loginScreen').style.display='';
+    startLoginAutoRefresh();
+  }else{
+    document.getElementById('loginScreen').style.display='none';
+    render();
+  }
 })();
 </script>
 </body>
