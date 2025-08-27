@@ -9,8 +9,9 @@
 :root{
   --bg:#0f1115; --fg:#e7eaf0; --muted:#9aa3b2; --accent:#6f86ff; --line:#273047;
   --card:#151a22; --err:#ff5c5c; --chip:#20283a; --bright:#ffef5a;
-  --pad:12px; --radius:12px; --fs:15px; --fs-sm:13px;
+  --pad:12px; --radius:12px; --fs:15px; --fs-sm:13px; --img:40px;
 }
+body.compact { --pad:10px; --radius:10px; --fs:14px; --fs-sm:12px; --img:32px; }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:var(--fs)/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial}
@@ -18,20 +19,21 @@ body{margin:0;background:var(--bg);color:var(--fg);font:var(--fs)/1.45 system-ui
 header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#0f1115,#0f1115cc 60%,#0f111500);border-bottom:1px solid var(--line)}
 h1{margin:0;font-size:18px}
 .badge{display:inline-flex;gap:6px;align-items:center;padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:#121726;font-size:var(--fs-sm)}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .tab{padding:6px 10px;border:1px solid var(--line);border-radius:9px;background:#141a28;cursor:pointer;font-size:var(--fs-sm)}
 .tab.active{background:#1a2234;border-color:#30405f}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--pad);margin:10px 0}
 .btn{background:#1a2234;border:1px solid var(--line);color:var(--fg);border-radius:10px;padding:7px 10px;cursor:pointer;font-size:var(--fs-sm)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary{background:#6f86ff;border-color:#6f86ff;color:#fff}
 .btn.ghost{background:transparent}
 input,select,textarea{width:100%;background:#111827;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px;font-size:var(--fs-sm)}
 .grid{display:grid;gap:8px}
 .notice{padding:8px;border:1px dashed var(--line);border-radius:10px;color:#c9d2e1;background:#141a22;font-size:var(--fs-sm)}
 .login-backdrop{position:fixed;inset:0;background:#0b0d1288;backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:1000}
 .login{width:min(520px,94vw);background:#111521;border:1px solid var(--line);border-radius:14px;padding:14px}
-.list-head,.list-row{display:grid;grid-template-columns:52px 1fr 150px;gap:8px;align-items:start}
+.list-head,.list-row{display:grid;grid-template-columns:52px 50px 1fr 150px;gap:8px;align-items:start}
+.cell-img{width:var(--img);height:var(--img);object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#0c1020;cursor:zoom-in}
 .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .pill{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 6px;font-size:var(--fs-sm)}
 .sum{display:inline-flex;gap:6px;align-items:center;border:1px dashed #4b536a;background:#1a2234;padding:4px 8px;border-radius:9px}
@@ -39,14 +41,22 @@ input,select,textarea{width:100%;background:#111827;color:var(--fg);border:1px s
 table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
 th,td{border-bottom:1px solid var(--line);padding:6px;vertical-align:top}
 th{position:sticky;top:0;background:#141a24;z-index:1}
-
-@media (max-width:720px){
-  :root{--pad:10px;--radius:10px;--fs:14px;--fs-sm:12px}
-  .list-head,.list-row{grid-template-columns:1fr}
-  .tabs{gap:4px}
-  .btn{padding:6px 8px}
-  .sum{padding:3px 6px}
+.switch{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+@media (max-width:820px){
+  .list-head,.list-row{grid-template-columns:40px 40px 1fr}
+  .col-input{grid-column:1/-1}
 }
+.preview-grid{display:grid;grid-template-columns:50px 1fr 60px;gap:8px;align-items:center}
+.preview-img{width:44px;height:44px;object-fit:cover;border:1px solid var(--line);border-radius:8px;background:#0c1020;cursor:zoom-in}
+
+/* === Лайтбокс (увеличение фото) === */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:3000}
+.lightbox.show{display:flex}
+.lightbox-img{max-width:92vw;max-height:88vh;transform-origin:center center;touch-action:none;user-select:none}
+.lightbox-ui{position:fixed;inset:auto 0 14px 0;display:flex;justify-content:center;gap:8px}
+.lightbox-ui .btn{background:#111a;backdrop-filter:blur(6px);border-color:#333a}
+.lightbox-top{position:fixed;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lightbox-cap{color:#cfd6e6;font-size:13px;max-width:60vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -56,6 +66,7 @@ th{position:sticky;top:0;background:#141a24;z-index:1}
     <div class="toolbar">
       <span class="badge">Пользователь: <strong id="who">—</strong></span>
       <button class="btn" id="btnChange">Сменить</button>
+      <label class="switch"><input type="checkbox" id="compactToggle"> Компактный режим</label>
       <span class="badge">💾 Офлайн</span>
     </div>
     <div class="tabs" id="tabs"></div>
@@ -72,24 +83,34 @@ th{position:sticky;top:0;background:#141a24;z-index:1}
       <label>Выберите своё имя
         <select id="userSel" style="margin-top:6px"><option value="">— выберите —</option></select>
       </label>
-
       <div id="codeRow" style="display:none">
         <div class="notice">Для получения доступа к странице ответственного введите код.</div>
-        <label>Код
-          <input id="codeInp" inputmode="numeric" maxlength="4" placeholder="____" style="margin-top:6px" />
-        </label>
+        <label>Код <input id="codeInp" inputmode="numeric" maxlength="4" placeholder="____" style="margin-top:6px" /></label>
       </div>
-
       <button class="btn primary" id="loginGo">Продолжить</button>
       <div id="firstRunHint" class="notice" style="display:none">Список пуст. Введите код и войдите как Ответственный, чтобы добавить имена.</div>
     </div>
   </div>
 </div>
 
+<!-- Лайтбокс -->
+<div class="lightbox" id="imgBox" aria-hidden="true">
+  <div class="lightbox-top">
+    <div class="lightbox-cap" id="imgCap"></div>
+    <button class="btn" id="imgClose">Закрыть ✕</button>
+  </div>
+  <img id="imgBig" class="lightbox-img" alt="">
+  <div class="lightbox-ui">
+    <button class="btn" id="imgMinus">−</button>
+    <button class="btn" id="imgReset">Сброс</button>
+    <button class="btn" id="imgPlus">＋</button>
+  </div>
+</div>
+
 <script>
 /* ===== Хранилище (IndexedDB + fallback) ===== */
 const idb=(function(){
-  const DB='invMobile_v1', V=1; let dbp=null;
+  const DB='invMobile_v3', V=1; let dbp=null;
   function open(){ if(dbp) return dbp; dbp=new Promise((res,rej)=>{
     const r=indexedDB.open(DB,V);
     r.onupgradeneeded=e=>{
@@ -103,7 +124,7 @@ const idb=(function(){
     r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);
   }); return dbp;}
   async function rw(mode,store){const db=await open();return db.transaction([store],mode).objectStore(store)}
-  const LS='inv_fb_mobile', read=()=>{try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch{return{}}}, write=o=>localStorage.setItem(LS,JSON.stringify(o));
+  const LS='inv_fb_mobile_v3', read=()=>{try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch{return{}}}, write=o=>localStorage.setItem(LS,JSON.stringify(o));
   async function tryCall(fn){try{return await fn()}catch{return{__fb:true}}}
   return{
     async set(s,v){const r=await tryCall(async()=>{const o=await rw('readwrite',s);await new Promise((res,rej)=>{const q=o.put(v);q.onsuccess=res;q.onerror=()=>rej(q.error)});return v}); if(r&&r.__fb){const db=read();(db[s]??={})[v.id||v.key]=v;write(db)}return v},
@@ -120,7 +141,7 @@ const now=()=>new Date().toISOString();
 const sum=xs=>(xs||[]).reduce((a,b)=>a+(+b.value||0),0);
 const byOrder=(a,b)=>(a.order||0)-(b.order||0);
 const state={user:null,tabs:[], _loginTimer:null};
-const ALWAYS_ASK_LOGIN=true; // показывать окно входа всегда при загрузке
+const ALWAYS_ASK_LOGIN=true;
 
 /* ===== Данные ===== */
 async function ensureSeed(){
@@ -193,7 +214,6 @@ document.getElementById('loginGo').onclick=async()=>{
       if(code!==RESPONSIBLE_CODE) return alert('Неверный код');
     }
   } else {
-    // Пустой список — допускаем вход ответственному по коду
     const code=(document.getElementById('codeInp').value||'').trim();
     if(code!==RESPONSIBLE_CODE) return alert('Неверный код');
     picked = users.find(u=>u.role==='responsible') || {id:'u_resp',name:'Ответственный',role:'responsible',active:true,createdAt:now()};
@@ -218,6 +238,83 @@ document.getElementById('btnChange').onclick=async()=>{
 function startLoginAutoRefresh(){ stopLoginAutoRefresh(); state._loginTimer=setInterval(fillUsersIntoSelect,2000) }
 function stopLoginAutoRefresh(){ if(state._loginTimer){clearInterval(state._loginTimer); state._loginTimer=null} }
 
+/* ===== Компактный режим ===== */
+(function initCompact(){
+  const key='inv_compact_mode';
+  const chk=document.getElementById('compactToggle');
+  const saved=localStorage.getItem(key)==='1';
+  if(saved){ document.body.classList.add('compact'); chk.checked=true; }
+  chk.onchange=()=>{ document.body.classList.toggle('compact',chk.checked); localStorage.setItem(key, chk.checked?'1':'0'); };
+})();
+
+/* ===== Лайтбокс (увеличение фото) ===== */
+(function initLightbox(){
+  const box = document.getElementById('imgBox');
+  const img = document.getElementById('imgBig');
+  const cap = document.getElementById('imgCap');
+  const btnPlus = document.getElementById('imgPlus');
+  const btnMinus = document.getElementById('imgMinus');
+  const btnReset = document.getElementById('imgReset');
+  const btnClose = document.getElementById('imgClose');
+
+  let scale=1, dx=0, dy=0, startX=0, startY=0, panning=false, lastTap=0, pinchDist=null;
+
+  function apply(){ img.style.transform = `translate(${dx}px,${dy}px) scale(${scale})`; }
+  function open(src, caption=''){
+    img.src=src; cap.textContent=caption||''; scale=1; dx=0; dy=0; apply();
+    box.classList.add('show'); box.setAttribute('aria-hidden','false'); img.focus?.();
+  }
+  function close(){ box.classList.remove('show'); box.setAttribute('aria-hidden','true'); }
+
+  btnPlus.onclick=()=>{ scale=Math.min(8, scale*1.2); apply(); };
+  btnMinus.onclick=()=>{ scale=Math.max(0.25, scale/1.2); apply(); };
+  btnReset.onclick=()=>{ scale=1; dx=0; dy=0; apply(); };
+  btnClose.onclick=close;
+
+  // клики вне картинки закрывают
+  box.addEventListener('click',e=>{ if(e.target===box) close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+
+  // колесо для зума
+  box.addEventListener('wheel',e=>{ e.preventDefault(); const delta = Math.sign(e.deltaY); if(delta>0) btnMinus.onclick(); else btnPlus.onclick(); }, {passive:false});
+
+  // панорамирование мышью
+  img.addEventListener('mousedown',e=>{ panning=true; startX=e.clientX-dx; startY=e.clientY-dy; e.preventDefault(); });
+  window.addEventListener('mousemove',e=>{ if(!panning) return; dx=e.clientX-startX; dy=e.clientY-startY; apply(); });
+  window.addEventListener('mouseup',()=>{ panning=false; });
+
+  // touch: двойной тап и pinch-zoom + панорамирование
+  img.addEventListener('touchstart',e=>{
+    if(e.touches.length===1){
+      const now=Date.now();
+      if(now-lastTap<300){ // double tap
+        scale = scale<1.8 ? 2 : 1;
+        dx=0; dy=0; apply();
+      }
+      lastTap=now;
+      panning=true; startX=e.touches[0].clientX-dx; startY=e.touches[0].clientY-dy;
+      pinchDist=null;
+    }else if(e.touches.length===2){
+      panning=false;
+      const [a,b]=e.touches; pinchDist=Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+    }
+  }, {passive:true});
+  img.addEventListener('touchmove',e=>{
+    if(e.touches.length===1 && panning){
+      dx=e.touches[0].clientX-startX; dy=e.touches[0].clientY-startY; apply();
+    }else if(e.touches.length===2 && pinchDist){
+      const [a,b]=e.touches;
+      const d=Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+      const factor=d/pinchDist; pinchDist=d;
+      scale=Math.max(0.25, Math.min(8, scale*factor)); apply();
+    }
+  }, {passive:true});
+  img.addEventListener('touchend',()=>{ panning=false; pinchDist=null; });
+
+  // глобальная функция
+  window._openLightbox = open;
+})();
+
 /* ===== Представления ===== */
 async function viewMine(){
   const app=document.getElementById('app'); app.innerHTML='';
@@ -229,7 +326,7 @@ async function viewMine(){
   app.appendChild(el(`<div class="notice card">${hasAssign?`Вам назначено позиций: <b>${list.length}</b>.`:`Раздача не выполнена — видны все позиции: <b>${items.length}</b>.`}</div>`));
 
   const box=el(`<div class="card">
-    <div class="list-head"><div>№</div><div>Наименование / описание</div><div>Ввод</div></div>
+    <div class="list-head"><div>№</div><div>Фото</div><div>Наименование / ввод</div><div class="col-input">Ввод</div></div>
     <div id="rows"></div>
   </div>`); app.appendChild(box);
   const rows=box.querySelector('#rows');
@@ -237,26 +334,40 @@ async function viewMine(){
   for(const it of list){
     const e=ent.find(x=>x.userId===myId && x.itemId===it.id) || {key:`${myId}|${it.id}`,userId:myId,itemId:it.id,values:[],comment:''};
     const total=sum(e.values);
+    const img = it.photo ? `<img class="cell-img" src="${it.photo}" alt="${(it.name||'').replace(/"/g,'&quot;')}">` : `<div class="cell-img" title="нет фото"></div>`;
     const row=el(`<div class="list-row">
       <div>#${it.order||''}</div>
+      <div>${img}</div>
       <div>
         <div style="font-weight:600">${it.name||'(без названия)'}</div>
+        <div class="muted" style="font-size:12px">${it.description||''}</div>
         <div class="pills" id="vals_${it.id}">
-          ${e.values.map(v=>`<span class="pill" data-vid="${v.id}">${v.value}<button class="btn ghost" data-e="edit" title="Изм.">✏️</button><button class="btn ghost" data-e="del" title="Уд.">🗑️</button></span>`).join('')}
+          ${e.values.map(v=>`<span class="pill" data-vid="${v.id}">${v.value}
+            <button class="btn ghost" data-e="edit" title="Изм.">✏️</button>
+            <button class="btn ghost" data-e="del" title="Уд.">🗑️</button>
+          </span>`).join('')}
         </div>
         <textarea id="c_${it.id}" rows="2" placeholder="Комментарий…" style="margin-top:6px">${e.comment||''}</textarea>
-        <div class="grid" style="grid-template-columns:1fr auto auto;gap:6px;margin-top:6px">
-          <input type="number" step="1" inputmode="numeric" id="n_${it.id}" placeholder="значение">
-          <button class="btn primary" data-add="${it.id}">Добавить</button>
-          <button class="btn" data-reset="${it.id}">Сбросить</button>
-        </div>
-        <div class="sum" style="margin-top:6px">Итого: <span class="v" id="s_${it.id}">${total}</span></div>
         <div class="grid" style="grid-template-columns:auto 1fr;align-items:center;margin-top:6px">
           <span>💬</span><button class="btn" data-savec="${it.id}">Сохранить комментарий</button>
         </div>
       </div>
+      <div class="col-input">
+        <div class="grid" style="grid-template-columns:1fr auto auto;gap:6px">
+          <input type="number" step="1" inputmode="numeric" id="n_${it.id}" placeholder="значение">
+          <button class="btn primary" data-add="${it.id}">＋</button>
+          <button class="btn" data-reset="${it.id}">⟲</button>
+        </div>
+        <div class="sum" style="margin-top:6px">Итого: <span class="v" id="s_${it.id}">${total}</span></div>
+      </div>
     </div>`);
     rows.appendChild(row);
+
+    // клики по мини-картинкам -> лайтбокс
+    const mini=row.querySelector('.cell-img');
+    if(mini && mini.tagName==='IMG'){
+      mini.addEventListener('click',()=>window._openLightbox(mini.src, mini.alt||''));
+    }
 
     row.querySelector(`[data-add="${it.id}"]`).onclick=async()=>{
       const v=parseFloat(row.querySelector(`#n_${it.id}`).value);
@@ -285,24 +396,170 @@ async function viewMine(){
 async function viewTotal(){
   const app=document.getElementById('app'); app.innerHTML='';
   const items=await listItems(); const users=await listUsers(); const ent=await allEntries(); const assigns=await getAssign();
+
+  /* === Импорт из Excel/CSV === */
+  const importCard=el(`<div class="card grid">
+    <h3 style="margin:0">Импорт из Excel/CSV</h3>
+    <div class="notice">
+      Сохраните файл в Excel как <b>CSV UTF-8</b>.<br>
+      Обязательная колонка: <code>№</code> / <code>order</code> (число). Дополнительно: <code>название | name</code>, <code>описание | description</code>, <code>фото | photo</code> (URL или data:URI).<br>
+      Импортируются только строки с номером и хотя бы одним полем (название/описание/фото).
+    </div>
+    <div class="grid" style="grid-template-columns:1fr auto;gap:8px">
+      <input type="file" id="csvFile" accept=".csv,.txt" />
+      <button class="btn" id="importBtn">Загрузить</button>
+    </div>
+  </div>`);
+  app.appendChild(importCard);
+
+  importCard.querySelector('#importBtn').onclick=async()=>{
+    const f=importCard.querySelector('#csvFile').files[0];
+    if(!f) return alert('Выберите файл CSV');
+    const text=await f.text();
+    const rows=parseCSV(text);
+    if(!rows.length) return alert('Пустой файл');
+    const headers=rows[0].map(h=>normalizeHeader(h));
+    const idx={
+      order: headers.findIndex(h=>['order','номер','№','#'].includes(h)),
+      name: headers.findIndex(h=>['name','название','наименование','item'].includes(h)),
+      description: headers.findIndex(h=>['description','описание','desc'].includes(h)),
+      photo: headers.findIndex(h=>['photo','фото','image','img','pic'].includes(h)),
+    };
+    if (idx.order < 0){ alert('Нет колонки "№" или "order".'); return; }
+    let count=0;
+    for(let i=1;i<rows.length;i++){
+      const r=rows[i]; if(!r || !r.length) continue;
+      const ordStr = String(r[idx.order]??'').replace(/[^\d\-]/g,'').trim();
+      if(!ordStr) continue;
+      const ord = parseInt(ordStr,10); if(Number.isNaN(ord)) continue;
+      const name = idx.name>=0 ? String(r[idx.name]??'').trim() : '';
+      const description = idx.description>=0 ? String(r[idx.description]??'').trim() : '';
+      const photo = idx.photo>=0 ? String(r[idx.photo]??'').trim() : '';
+      if(!name && !description && !photo) continue;
+
+      const existed = (await listItems()).find(it=>(it.order||0)===ord);
+      if(existed){
+        await idb.set('items',{...existed,order:ord,name:name||existed.name||`Позиция ${ord}`,description,photo});
+      }else{
+        await idb.set('items',{id:uid('it'),order:ord,name:name||`Позиция ${ord}`,description,photo});
+      }
+      count++;
+    }
+    alert(`Импортировано строк: ${count}`); render();
+  };
+
+  /* === Импорт картинок (массово) === */
+  const imgCard=el(`<div class="card grid">
+    <h3 style="margin:0">Импорт картинок</h3>
+    <div class="notice">
+      Загрузите сразу много файлов (jpg/png/webp). Сопоставление: по номеру (12.jpg → №12) или по названию (без пробелов и знаков).<br>
+      Сохранение: ссылкой (укажите URL-префикс) или встроено (base64).
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">
+      <div class="grid">
+        <label>Файлы изображений
+          <input id="imgFiles" type="file" accept="image/*" multiple>
+        </label>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:6px">
+          <label><input type="radio" name="matchMode" value="number" checked> По номеру</label>
+          <label><input type="radio" name="matchMode" value="name"> По названию</label>
+        </div>
+      </div>
+      <div class="grid">
+        <label>Сохранение фото
+          <select id="saveMode">
+            <option value="url">Ссылкой (рекомендуется)</option>
+            <option value="data">Встроено (base64)</option>
+          </select>
+        </label>
+        <label>URL-префикс (для режима «Ссылкой»)
+          <input id="urlPrefix" placeholder="/images/ или https://…/img/">
+        </label>
+        <button class="btn" id="imgImportBtn">Импортировать картинки</button>
+      </div>
+    </div>
+    <div id="imgPreview" class="grid"></div>
+  </div>`);
+  app.appendChild(imgCard);
+
+  imgCard.querySelector('#imgImportBtn').onclick=async()=>{
+    const files=[...imgCard.querySelector('#imgFiles').files];
+    if(!files.length) return alert('Выберите файлы картинок');
+    const matchMode = imgCard.querySelector('input[name="matchMode"]:checked').value;
+    const saveMode = imgCard.querySelector('#saveMode').value;
+    const prefix = (imgCard.querySelector('#urlPrefix').value||'').trim();
+
+    const allItems = await listItems();
+    const byOrder = new Map(allItems.map(it=>[String(it.order||''), it]));
+    const byName = new Map(allItems.map(it=>[normalizeName(it.name||''), it]));
+
+    let matched=0, updated=0;
+    const preview = imgCard.querySelector('#imgPreview'); preview.innerHTML='';
+
+    const readAsDataURL=f=>new Promise(res=>{const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.readAsDataURL(f);});
+
+    for(const f of files){
+      let item=null;
+      const base = f.name.replace(/\.[^.]+$/,'');
+      if(matchMode==='number'){
+        const m=f.name.match(/(\d{1,6})/);
+        if(m){ item=byOrder.get(m[1]); }
+      }else{
+        item=byName.get(normalizeName(base));
+      }
+      if(!item) continue;
+
+      let photoValue='';
+      if(saveMode==='url'){
+        if(!prefix){ alert('Укажите URL-префикс (например, /images/)'); return; }
+        photoValue = (prefix.endsWith('/')?prefix:(prefix+'/')) + f.name;
+      }else{
+        photoValue = await readAsDataURL(f);
+      }
+
+      await idb.set('items',{...item, photo:photoValue});
+      updated++;
+
+      const row=document.createElement('div');
+      row.className='preview-grid';
+      row.innerHTML=`<div>#${item.order||''}</div><div>${item.name||''}</div><img class="preview-img" src="${photoValue}" alt="${(item.name||'').replace(/"/g,'&quot;')}">`;
+      // кликабельный превью в отчёте
+      row.querySelector('.preview-img').addEventListener('click',e=>window._openLightbox(photoValue, item.name||''));
+      preview.appendChild(row);
+      matched++;
+    }
+    alert(`Сопоставлено файлов: ${matched}. Обновлено позиций: ${updated}.`);
+    render();
+  };
+
+  // Итоговая таблица + назначение
   const tbl=el(`<div class="card" style="overflow:auto">
     <table><thead><tr>
-      <th>№</th><th>Наименование</th>${users.map(u=>`<th>${u.name}</th>`).join('')}<th>Итого</th><th>Назначено</th>
+      <th>№</th><th>Фото</th><th>Наименование</th>${users.map(u=>`<th>${u.name}</th>`).join('')}<th>Итого</th><th>Назначено</th>
     </tr></thead><tbody id="tb"></tbody></table>
   </div>`); app.appendChild(tbl);
   const tb=tbl.querySelector('#tb');
   for(const it of items){
+    const img = it.photo ? `<img class="cell-img" src="${it.photo}" alt="${(it.name||'').replace(/"/g,'&quot;')}">` : '';
     const row=el(`<tr>
       <td>${it.order||''}</td>
-      <td>${it.name||''}</td>
+      <td>${img}</td>
+      <td><div style="font-weight:600">${it.name||''}</div><div class="muted" style="font-size:12px">${it.description||''}</div></td>
       ${users.map(u=>{ const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id); return `<td>${e?sum(e.values):0}</td>`; }).join('')}
       <td><b>${ users.map(u=>{const e=ent.find(x=>x.itemId===it.id&&x.userId===u.id);return e?sum(e.values):0}).reduce((a,b)=>a+b,0) }</b></td>
       <td><select data-assign="${it.id}">${users.map(u=>`<option value="${u.id}" ${assigns.get(it.id)===u.id?'selected':''}>${u.name}</option>`).join('')}</select></td>
     </tr>`);
     tb.appendChild(row);
+
+    const mini=row.querySelector('.cell-img');
+    if(mini){
+      mini.addEventListener('click',()=>window._openLightbox(mini.src, mini.alt||''));
+    }
+
     row.querySelector(`[data-assign="${it.id}"]`).onchange=async e=>{ await setAssign(it.id,e.target.value) };
   }
 
+  // Инструменты
   const tools=el(`<div class="card grid" style="grid-template-columns:1fr auto;align-items:end">
     <div>
       <h3 style="margin:0 0 6px;font-size:15px">Разделить таблицу</h3>
@@ -373,24 +630,39 @@ async function viewManage(){
   const icard=el(`<div class="card">
     <h3 style="margin:0 0 6px">Позиции</h3>
     <div id="ilist"></div>
-    <div class="grid" style="grid-template-columns:100px 1fr 2fr auto;gap:6px;margin-top:6px">
+    <div class="grid" style="grid-template-columns:100px 1fr 2fr 1fr auto;gap:6px;margin-top:6px">
       <input id="io" type="number" placeholder="№">
       <input id="in" placeholder="Название">
       <input id="id" placeholder="Описание">
+      <input id="ip" placeholder="Фото (URL)">
       <button class="btn primary" id="addI">Добавить</button>
     </div>
   </div>`); app.appendChild(icard);
   const IL=icard.querySelector('#ilist');
   for(const it of items){
-    const r=el(`<div class="grid" style="grid-template-columns:100px 1fr 2fr auto auto;gap:6px;margin:6px 0">
+    const img = it.photo ? `<img class="cell-img" src="${it.photo}" alt="${(it.name||'').replace(/"/g,'&quot;')}">` : '';
+    const r=el(`<div class="grid" style="grid-template-columns:60px 40px 1fr 2fr 1fr auto auto;gap:6px;margin:6px 0;align-items:center">
       <input id="o_${it.id}" type="number" value="${it.order||0}">
+      <div>${img}</div>
       <input id="n_${it.id}" value="${it.name||''}">
       <input id="d_${it.id}" value="${it.description||''}">
+      <input id="p_${it.id}" value="${it.photo||''}" placeholder="URL / data:">
       <button class="btn" data-save="${it.id}">💾</button>
       <button class="btn" data-del="${it.id}">🗑️</button>
     </div>`); IL.appendChild(r);
+
+    const mini=r.querySelector('.cell-img');
+    if(mini){
+      mini.addEventListener('click',()=>window._openLightbox(mini.src, mini.alt||''));
+    }
+
     r.querySelector(`[data-save="${it.id}"]`).onclick=async()=>{
-      await idb.set('items',{...it,order:parseInt(r.querySelector(`#o_${it.id}`).value||'0',10),name:r.querySelector(`#n_${it.id}`).value.trim(),description:r.querySelector(`#d_${it.id}`).value.trim()});
+      await idb.set('items',{...it,
+        order:parseInt(r.querySelector(`#o_${it.id}`).value||'0',10),
+        name:r.querySelector(`#n_${it.id}`).value.trim(),
+        description:r.querySelector(`#d_${it.id}`).value.trim(),
+        photo:r.querySelector(`#p_${it.id}`).value.trim()
+      });
       render();
     };
     r.querySelector(`[data-del="${it.id}"]`).onclick=async()=>{ if(confirm('Удалить позицию?')){ await idb.del('items',it.id); render(); } };
@@ -399,7 +671,8 @@ async function viewManage(){
     const oo=parseInt(icard.querySelector('#io').value||'0',10);
     const nn=icard.querySelector('#in').value.trim(); if(!nn) return alert('Название?');
     const dd=icard.querySelector('#id').value.trim();
-    await idb.set('items',{id:uid('it'),order:oo,name:nn,description:dd});
+    const pp=icard.querySelector('#ip').value.trim();
+    await idb.set('items',{id:uid('it'),order:oo,name:nn,description:dd,photo:pp});
     render();
   };
 }
@@ -421,6 +694,31 @@ async function viewHistory(){
     }
   }
 }
+
+/* ===== CSV Parser ===== */
+function parseCSV(text){
+  text=text.replace(/\r\n/g,"\n").replace(/\r/g,"\n");
+  const comma=(text.match(/,/g)||[]).length, semi=(text.match(/;/g)||[]).length;
+  const sep = semi>comma ? ';' : ',';
+  const rows=[]; let i=0, cell='', row=[], inQ=false;
+  while(i<text.length){
+    const ch=text[i];
+    if(inQ){
+      if(ch==='"' && text[i+1]==='"'){ cell+='"'; i+=2; continue; }
+      if(ch==='"'){ inQ=false; i++; continue; }
+      cell+=ch; i++; continue;
+    }else{
+      if(ch==='"'){ inQ=true; i++; continue; }
+      if(ch===sep){ row.push(cell); cell=''; i++; continue; }
+      if(ch==='\n'){ row.push(cell); rows.push(row); row=[]; cell=''; i++; continue; }
+      cell+=ch; i++; continue;
+    }
+  }
+  row.push(cell); rows.push(row);
+  return rows.filter(r=>Array.isArray(r) && r.some(c=>String(c??'').trim()!==''));
+}
+function normalizeHeader(h){ return String(h||'').toLowerCase().trim().replace(/\s+/g,'') }
+function normalizeName(s){ return String(s||'').toLowerCase().replace(/[\s_\-.,;:()"'`~!@#\$%\^&\*\+=\[\]{}<>\/\\|]+/g,'').trim() }
 
 /* ===== Хелперы ===== */
 function el(html){ const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstElementChild }
@@ -453,3 +751,4 @@ async function render(){
 </script>
 </body>
 </html>
+
